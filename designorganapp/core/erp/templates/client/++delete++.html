@@ -1,0 +1,110 @@
+<form action="{% url 'productos_app:eliminar-clientes' clientes.id %}" method="POST" class="form-register"> {% csrf_token %}
+
+    <div class="modal-dialog modal-full-heigh" role="document">
+        <div class="modal-content">
+
+            <div class="text-center modal-header" style="background-color:#F24130;" class="white-text">
+                <h4 class="white-text modal-title w-100 font-weight-bold">Eliminar #{{ clientes.id }} / {{ clientes.code_client }}</h4>
+                <button class="close text-secondary" type="button" data-dismiss="modal" aria-label="Close">
+                <span class="white-text" aria-hidden="true">&times;</span>
+            </button>
+
+            </div>
+
+            <div class="container">
+
+                <div class="modal-body">
+                    <!--AGREGUÉ SOLO ESTO Y LA "/ clientes.code_client" EN LA CABECERA DEL MODAL-->
+                    <div class="card-body">
+
+                        <p class="card-title"><strong>Apellido: </strong><strong style="color:#F24130;">{{ clientes.surname }}</strong></p>
+                        <p class="card-title"><strong>Nombre: </strong><strong style="color:#F24130;">{{ clientes.name }}</strong></p>
+                        <p class="card-title"><strong>Móbil: </strong><strong style="color:#F24130;">{{ clientes.mobile }}</strong></p>
+                        <p class="card-title"><strong>Teléfono: </strong><strong style="color:#F24130;">{{ clientes.phone }}</strong></p>
+                        <p class="card-title"><strong>Mail: </strong><strong style="color:#F24130;">{{ clientes.email }}</strong></p>
+                        <p class="card-title"><strong>Dirección: </strong><strong style="color:#F24130;">{{ clientes.address }}</strong></p>
+                        <p class="card-title"><strong>Departamento: </strong><strong style="color:#F24130;">{{ clientes.department }}</strong></p>
+                        <p class="card-title"><strong>Localidad: </strong><strong style="color:#F24130;">{{ clientes.locality }}</strong></p>
+                        <p class="card-title"><strong>Provincia: </strong><strong style="color:#F24130;">{{ clientes.province }}</strong></p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer justify-content-center">
+                    <button type="button" data-toggle="modal" data-target="#centralModalWarning" style="background-color:#F24130;" class="btn white-text btn-rounded btn-sm">Eliminar <i class="fas fa-trash-alt sm-1"></i></button>
+                    <button style="background-color:#02732A;" class="btn white-text btn-rounded btn-sm" type="button" data-dismiss="modal">Cancelar <i class="fas fa-times ml-1"></i></button>
+                </div>
+
+
+                <div class="card-footer white-text" style="background-color:#F2F2F2;">
+
+                    <!-- Central MODAL Medium Warning -->
+
+                    <div class="modal fade" id="centralModalWarning" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-notify modal-danger" role="document">
+                            <!--Content-->
+                            <div class="modal-content">
+                                <!--Header-->
+                                <div class="modal-header" style="background-color:#F24130;">
+                                    <p class="heading lead">¿Está seguro que desea eliminar al Cliente: {{ clientes.surname }}, {{ clientes.name }}?</p>
+
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" class="white-text">&times;</span>
+                                    </button>
+                                </div>
+
+                                <!--Body-->
+                                <div class="modal-body">
+                                    <div class="text-center">
+                                        <i class="fas fa-exclamation-triangle fa-4x mb-3 animated rotateIn"></i>
+                                        <p>Si confirma la eliminación del registro seleccionado, no podrá acceder nuevamente a este en otro momento.</p>
+                                    </div>
+                                </div>
+
+                                <!--Footer-->
+                                <div class="modal-footer justify-content-center">
+                                    <button type="submit" style="background-color:#F24130;" class="btn white-text btn-rounded btn-sm" type="submit" class="btn">Confirmar <i class="fas fa-trash-alt sm-1"></i></button>
+                                    <a href="{% url 'productos_app:lista-clientes' %}" style="background-color:#02732A;" class="btn white-text btn-rounded btn-sm" type="submit" class="btn">Cancelar <i class="fas fa-times ml-1"></i></a>
+                                </div>
+                            </div>
+                            <!--/.Content-->
+                        </div>
+                    </div>
+                    <!-- Central Modal Medium Warning -->
+
+                </div>
+
+            </div>
+        </div>
+</form>
+
+
+
+<script>
+
+submit_with_ajax();
+
+$('form').on('submit', function(e) {
+        e.preventDefault();
+        var parameters = $(this).serializeArray();
+        $.ajax({
+            url: window.location.pathname,
+            type: 'POST',
+            data: parameters,
+            dataType: 'json',
+        }).done(function(data) {
+            if (!data.hasOwnProperty('error')) {
+                Location.href = '{{ delete_url_client }}';
+                return false;
+            }
+            message_error(data.error);
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            //alert('Error en la busqueda de datos');
+            alert(textStatus + ': ' + errorThrown);
+        }).always(function(data) {
+            //alert('Completo el proceso Category / Carga de Datos');
+        });
+    });
+</script>

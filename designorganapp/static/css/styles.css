@@ -1,0 +1,565 @@
+:root {
+    --structure_blue1: #040BDB;
+    /*rgba(4, 11, 219, 0.1) */
+    --structure_blue2: #0A0EF0;
+    /*rgba(10, 14, 240, 0.1) */
+    --structure_blue3: #7B84DB;
+    /*rgba(123, 132, 219, 0.1) */
+    --structure_white: #F2F2F2;
+    /*rgba(255, 255, 255, 0.1) */
+    --structure_white2: #FFFFFF;
+    /*rgba(242, 242, 242, 0.1) */
+    --structurec_black: #0D0D0D;
+    /*rgba(13, 13, 13, 0.1) */
+    --structurec_grey: #C6C6C6;
+    /*rgba(198, 198, 198, 0.1) */
+    --warning_blue1: #0540F2;
+    /*rgba(5, 64, 242, 0.1) */
+    --warning_blue2: #3D6AF2;
+    /*rgba(61, 106, 242, 0.1) */
+    --warning_green: #02732A;
+    /*rgba(2, 115, 42, 0.1) */
+    --warning_yellow: #F2E205;
+    /*rgba(242, 226, 5, 0.1) */
+    --warning_red: #F24130;
+    /*rgba(242, 65, 48, 0.1) */
+    --warning_green_state_one: #06af41;
+    /*rgba(6, 175, 65, 0.1) */
+    --warning_green_state_two: #f39c12;
+    /*rgba(243, 156, 18, 0.1) */
+}
+
+* {
+    /*Tipo de letra*/
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /*Tamaño texto font-size: 15px;*/
+    /*Margen*/
+    margin: 0;
+    /*Es una propiedad CSS para cambiar el modelo de caja por defecto de los navegadores.*/
+    /*El ancho de un elemento se altera si se le aplica un borde o un padding.*/
+    box-sizing: border-box;
+}
+
+
+/* **************** NavBar ********************* */
+
+.nav_head {
+    background-color: var(--structurec_black);
+    /*Permite regular la visiblidad de los contenidos que sobresalen de una caja html*/
+    overflow: hidden;
+    /*Ancho del X %*/
+    width: 100%;
+    /*Alineación del texto*/
+    text-align: right;
+    /*Alto del Navbar*/
+    height: 40px;
+    font-size: 15px;
+}
+
+.navbar_head {
+    background-color: var(--structurec_black);
+    /*sirve para alinear un elemento, haciendo que el texto de alrededor del mismo se agrupe entorno a dicho elemento.*/
+    /*Sus posibles valores son “left” (para alinear el elemento a la izquierda) y “right” (para alinearlo a la derecha).*/
+    /*Un elemento con float CSS debe tener definida su anchura*/
+    float: right;
+    text-align: right;
+    /*Ancho del 100%*/
+    width: 100%;
+    /*Alto del 100%*/
+    height: 100%;
+    /*Bajar el texto unos 10px*/
+    padding-top: 10px;
+    font-size: 15px;
+}
+
+.navbar_head ul li {
+    display: inline;
+}
+
+.navbar_head_link a {
+    /*Se elimina la decoración del link*/
+    text-decoration: none;
+    /*Color de texto. Esto se debe hacer directamente sobre el ancla para que funcione*/
+    color: var(--structure_white);
+    /*Separación entre texto*/
+    margin-right: 15px;
+}
+
+.navbar_head_link a:hover {
+    color: var(--warning_yellow);
+    text-decoration: none;
+    /*Texto en negritas*/
+    font-weight: bold;
+}
+
+
+/* **************** PANEL IZQUIERDO ********************* */
+
+.company_log {
+    background: var(--structure_white);
+    text-align: center;
+    /*Ancho del Navbar*/
+    width: 150px;
+    /*Alto del Navbar*/
+    height: 150px;
+    padding-top: 60px;
+    margin: 2px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.left_panel {
+    background: var(--structurec_black);
+    /*Ancho del 100%*/
+    width: 100%;
+}
+
+.left_panel_size {
+    /*Ancho del 100%*/
+    width: 100%;
+}
+
+
+/* **************** BOTONES ********************* */
+
+.btnGhost {
+    position: relative;
+    display: inline-block;
+    /*Centrado del texto*/
+    text-align: center;
+    /*Bajar el texto unos 10px*/
+    padding-top: 15px;
+    /*LE DA EL TAMAÑO AL OBJETO - ALTO - ANCHO padding: 20px 80px;*/
+    /*Ancho del 100%*/
+    width: 100%;
+    /*Alto del 100%*/
+    height: 50px;
+    /*COLOR DE TEXTO*/
+    color: var(--structure_white);
+    /*PERMITE QUE EL TEXTO SIEMPRE ESTÉ EN MAYÚSCULA*/
+    text-transform: uppercase;
+    /*ES PARA ELIMIANR LA LINEA DE SUBRAYADO EL TEXTO*/
+    text-decoration: none;
+    background: var(--structurec_black);
+    /*ANIMACIÓN*/
+    /*VELOCIDAD PARA LA TRANSICIÓN DE CAMBIO DE COLOR*/
+    transition: 1S;
+    /*flex: 1 1 auto;*/
+}
+
+.btnGhost:hover {
+    /*COLOR DE TEXTO*/
+    color: var(--structure_white);
+    background-color: transparent;
+    /*SIN EL SUBRAYADO*/
+    text-decoration: none;
+}
+
+.btnGhost:active {
+    /*inset LE DA EL EFECTO HACIA ADENTRO CUANDO SE PRESIONA*/
+    box-shadow: inset 0 0 20px var(--structure_white);
+}
+
+.btnGhost.secondprimari {
+    /*COLOR DEL BOTÓN*/
+    background-color: transparent;
+    /*COLOR DE TEXTO*/
+    color: var(--structure_white);
+}
+
+.btnGhost.secondprimari:hover {
+    /*COLOR DE TEXTO*/
+    color: var(--structurec_black);
+    /*COLOR DE BOTON*/
+    background-color: var(--warning_yellow);
+    /*COLOR DEL BORDE DEL BOTON*/
+    border-color: var(--warning_yellow);
+    /*SIN EL SUBRAYADO*/
+    text-decoration: none;
+}
+
+.btnGhost.secondprimari:active {
+    /*inset LE DA EL EFECTO HACIA ADENTRO CUANDO SE PRESIONA*/
+    box-shadow: inset 0 0 20px var(--structurec_black);
+}
+
+
+/* **************** BOTÓN PRECIONADO ********************* */
+
+.btnSelected {
+    position: relative;
+    display: inline-block;
+    /*Centrado del texto*/
+    text-align: center;
+    /*Bajar el texto unos 10px*/
+    padding-top: 15px;
+    /*LE DA EL TAMAÑO AL OBJETO - ALTO - ANCHO padding: 20px 80px;*/
+    /*Ancho del 100%*/
+    width: 100%;
+    /*Alto del 100%*/
+    height: 50px;
+    /*COLOR DE TEXTO*/
+    color: var(--structurec_black);
+    /*PERMITE QUE EL TEXTO SIEMPRE ESTÉ EN MAYÚSCULA*/
+    text-transform: uppercase;
+    /*ES PARA ELIMIANR LA LINEA DE SUBRAYADO EL TEXTO*/
+    text-decoration: none;
+    background: var(--warning_yellow);
+    /*ANIMACIÓN*/
+    /*VELOCIDAD PARA LA TRANSICIÓN DE CAMBIO DE COLOR*/
+    transition: 1S;
+    /*flex: 1 1 auto;*/
+}
+
+.btnSelected:hover {
+    /*COLOR DE TEXTO*/
+    color: var(--structurec_black);
+    /*SIN EL SUBRAYADO*/
+    text-decoration: none;
+}
+
+
+/* **************** BOTONES AGREGAR / MODIFICAR / ELIMINAR ********************* */
+
+.button_add {
+    background: var(--structure_blue3);
+    color: var(--structure_white);
+    text-align: center;
+    position: fixed;
+}
+
+.button_modify {
+    background: var(--warning_blue2);
+    color: var(--structure_white);
+    text-align: center;
+}
+
+.button_delete {
+    background: var(--warning_red);
+    color: var(--structure_white);
+    text-align: center;
+}
+
+
+/* **************** ICONOS ********************* */
+
+.icon span {
+    margin-right: 10px;
+}
+
+
+/* ****************  PANEL INFERIOR DE LA APP ********************* */
+
+.central_panel_father {
+    background: var(--structurec_black);
+}
+
+
+/* ****************  PANEL DE DATOS PARA EL CLIENTE ********************* */
+
+.central_panel_data {
+    background: var(--structure_white);
+}
+
+.edge_decoration_first {
+    padding: 10px;
+}
+
+.edge_decoration_second {
+    /*Espacio desde el borde hacia adentro*/
+    padding: 20px;
+    /*Borde del elemento*/
+    border: solid 1px var(--structurec_grey);
+    border-radius: 10px;
+    /*Sombra al borde (eje x - eje y - difuminado - expanción - color de la sombra)*/
+    box-shadow: 8px 8px 15px 2px var(--structurec_grey);
+    /*Ancho del Navbar*/
+    width: 100%;
+    /*Alto del Navbar*/
+    height: 100%;
+}
+
+.edge_decoration_tab {
+    background: var(--structure_white);
+    /*Espacio desde el borde hacia adentro*/
+    padding: 20px;
+    /*Borde del elemento*/
+    border: solid 1px var(--structurec_grey);
+    border-radius: 10px;
+    /*Ancho del Navbar*/
+    width: 100%;
+    /*Alto del Navbar*/
+    height: 100%;
+}
+
+
+/*
+.edge_decoration_tab_white {
+    padding: 20px;
+    border: solid 1px var(--structure_white2);
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+}
+*/
+
+
+/* **************** ESTILOS DE TEXTOS Y OTROS ********************* */
+
+.title_organize {
+    background: var(--structure_white);
+    /* background: var(--structure_white2);*/
+}
+
+.title_add {
+    color: var(--structure_blue1);
+    background: var(--structure_white2);
+    font-weight: bold;
+    /*Espacio desde el borde hacia adentro*/
+    padding: 10px;
+    /*Borde del elemento*/
+    border: solid 1px var(--structure_blue1);
+    border-radius: 10px;
+    /*Ancho del Navbar*/
+    width: 100%;
+    /*Alto del Navbar*/
+    height: 100%;
+}
+
+.title_edit {
+    color: var(--structure_blue2);
+    background: var(--structure_white2);
+    font-weight: bold;
+    /*Espacio desde el borde hacia adentro*/
+    padding: 10px;
+    /*Borde del elemento*/
+    border: solid 1px var(--structure_blue2);
+    border-radius: 10px;
+    /*Ancho del Navbar*/
+    width: 100%;
+    /*Alto del Navbar*/
+    height: 100%;
+}
+
+.title_delete {
+    color: var(--warning_red);
+    background: var(--structure_white2);
+    font-weight: bold;
+    /*Espacio desde el borde hacia adentro*/
+    padding: 10px;
+    /*Borde del elemento*/
+    border: solid 1px var(--warning_red);
+    border-radius: 10px;
+    /*Ancho del Navbar*/
+    width: 100%;
+    /*Alto del Navbar*/
+    height: 100%;
+}
+
+.aling_obj_input {
+    height: 50px;
+}
+
+.aling_obj_button {
+    height: 55px;
+}
+
+.box_center {
+    align-content: center;
+}
+
+
+/*
+--structure_blue1: #040BDB; /*rgba(4, 11, 219, 0.1) /
+--structure_blue2: #0A0EF0; /*rgba(10, 14, 240, 0.1) /
+--structure_blue3: #7B84DB; /*rgba(123, 132, 219, 0.1) /
+--structure_white: #F2F2F2; /*rgba(242, 242, 242, 0.1) /
+--structure_white2: #FFFFFF; /* rgba(255, 255, 255, 0.1) /
+--structurec_black: #0D0D0D; /*rgba(13, 13, 13, 0.1) /
+--structurec_grey: #C6C6C6; /*rgba(198, 198, 198, 0.1) /
+--warning_blue1: #0540F2; /*rgba(5, 64, 242, 0.1) /
+--warning_blue2: #3D6AF2; /*rgba(61, 106, 242, 0.1) /
+--warning_green: #02732A; /*rgba(2, 115, 42, 0.1) /
+--warning_yellow: #F2E205; /*rgba(242, 226, 5, 0.1) /
+--warning_red: #F24130; /*rgba(242, 65, 48, 0.1) /
+--warning_green_state_one: #06af41; /*rgba(6, 175, 65, 0.1) /
+--warning_green_state_two: #f39c12; /*rgba(243, 156, 18, 0.1) /
+*/
+
+
+/* ****************  CSS para la Tabla Bootstrap ********************* */
+
+.dtHorizontalVerticalExampleWrapper {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#dtHorizontalVerticalExample th,
+td {
+    white-space: nowrap;
+}
+
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before {
+    bottom: .5em;
+}
+
+.containerTab {
+    background: var(--structure_white2);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid var(--structurec_grey);
+    overflow-x: scroll;
+    overflow-y: scroll;
+    /*Estilos estándar experimentales (Principalmente Firefox)*/
+    scrollbar-color: rgba(198, 198, 198, .5) rgba(189, 189, 189, 0);
+    scrollbar-width: thin;
+}
+
+
+/* ****************  MEDIA ********************* */
+
+@media (max-width: 1000px) {
+    .company_log {
+        background: var(--structure_white);
+        text-align: center;
+        /*Ancho del Navbar*/
+        width: 125px;
+        /*Alto del Navbar*/
+        height: 125px;
+        margin: 2px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 950px) {
+    /** {
+        font-size: 14px;
+    }*/
+    .left_panel {
+        width: 100%;
+    }
+    .company_log {
+        background: var(--structure_white);
+        text-align: center;
+        /*Ancho del Navbar*/
+        width: 115px;
+        /*Alto del Navbar*/
+        height: 115px;
+        margin: 2px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 850px) {
+    /** {
+        font-size: 13px;
+    }*/
+    .left_panel {
+        width: 100%;
+    }
+    .company_log {
+        background: var(--structure_white);
+        text-align: center;
+        /*Ancho del Navbar*/
+        width: 100px;
+        /*Alto del Navbar*/
+        height: 100px;
+        margin: 2px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 750px) {
+    /** {
+        font-size: 12px;
+    }*/
+    .left_panel {
+        width: 100%;
+    }
+    .company_log {
+        background: var(--structure_white);
+        text-align: center;
+        /*Ancho del Navbar*/
+        width: 85px;
+        /*Alto del Navbar*/
+        height: 85px;
+        margin: 2px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 650px) {
+    /** {
+        font-size: 11px;
+    }*/
+    .left_panel {
+        width: 100%;
+    }
+    .company_log {
+        background: var(--structure_white);
+        text-align: center;
+        /*Ancho del Navbar*/
+        width: 72px;
+        /*Alto del Navbar*/
+        height: 72px;
+        margin: 2px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .company_log {
+        background: var(--structure_white);
+        text-align: center;
+        /*Ancho del Navbar*/
+        width: 0px;
+        /*Alto del Navbar*/
+        height: 0px;
+        margin: 2px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 575px) {
+    .left_panel_size {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        height: auto;
+    }
+    .company_log {
+        background: var(--structure_white);
+        text-align: center;
+        /*Ancho del Navbar*/
+        width: 0px;
+        /*Alto del Navbar*/
+        height: 0px;
+        margin: 2px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

@@ -1,0 +1,396 @@
+{% extends "body.html" %}
+<!---->
+{% load static %}
+<!-- APP Widgwt Tweaks -->
+{% load widget_tweaks %}
+
+<!-- Bloque de Datos -->
+{% block content_data %}
+<div class="card card-default">
+    <!-- CARGA DE DATOS -->
+    <form method="POST" id="limpiarForm2"  action="." enctype="multipart/form-data" style="background-color:#F2F2F2;">
+        <div class="card navbar-dark white-text" style="background-color:#0A0EF0;">
+            <div class="card-header">
+                <h3 class="card-title">
+                    {% if action == 'add' %}
+                        <i class="fas fa-plus"></i>
+                            {% else %}
+                        <i class="fas fa-edit"></i>
+                    {% endif %}
+                    <font _mstmutation="1" _msthash="2599285" _msttexthash="94939"> {{title}} </font>
+                </h3>
+            </div>
+        </div>
+
+        <div class="card-body">
+
+            {% csrf_token %}
+            <input type="hidden" name="action" value="{{ action }}">
+            <!---->
+            {% if form.errors %}
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="fas fa-exclamation-triangle"></i>
+                        <font _mstmutation="1" _msthash="3077451" _msttexthash="103974"> ¡Ha ocurrido un ERROR al intentar guardar un registro!</font>
+                    </h5>
+                    <ul>
+                        <font _mstmutation="1" _msthash="2750085" _msttexthash="21262462">
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </font>
+                    </ul>
+                </div>
+            {% endif %}
+
+
+
+            <!--CAMPOS DE DATOS DEL MODELO USER -->
+            <div class="card-body">
+                {% for field in form.visible_fields %}
+                    <div class="form-group">
+                        <label for="email">{{ field.label }}:</label>
+                        {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                    </div>
+                {% endfor %}
+            </div>
+            <!--CAMPOS DE DATOS DEL MODELO USER -->
+
+
+
+            
+        </div>
+        <!---->
+
+        <div class="card-footer row justify-content-center">
+            {% if action == 'add' %}
+            <button type="submit" style="background-color:#02732A;" class="btn white-text btn-rounded btn-sm" class="btn" id="enviar ">Registrar <i class="fas fa-plus ml-1"></i></button>
+            <button type="butto" onclick="limpiarForm()" style="background-color:#7B84DB;" class="btn white-text btn-rounded btn-sm" class="btn">Limpar <i class="fas fa-broom ml-1"></i></button>
+            <!---->
+            {% else %}
+            <!---->
+            <button type="submit" style="background-color:#02732A;" class="btn white-text btn-rounded btn-sm" class="btn">Actualizar <i class="fas fa-sync ml-1"></i></button>
+            <!---->
+            {% endif %}
+            <a type="submit" href="{{ list_url }}" style="background-color:#F24130;" class="btn white-text btn-rounded btn-sm" class="btn">Cancelar <i class="fas fa-times ml-1"></i></a>
+        </div>
+
+    </form>
+    <!--FIN CARGA DE DATOS-->
+</div>
+
+
+<script>
+    {% if form.errors %}
+        var errors = '';
+        {% for field in form %}
+            {% for error in field.errors %}
+                errors += '{{ error }}\n';
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            errors += '{{ error }}\n';
+        {% endfor %}
+        Swal.fire({
+            title: 'Error!',
+            text: errors,
+            icon: 'error'
+        });
+    {% endif %}
+
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+        var parameters = new FormData(this);
+        submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
+            Swal.fire({
+                title: 'Alerta',
+                text: 'Acción exitosa',
+                icon: 'success',
+                timer: 2000,
+                onClose: () => {
+                    location.href = '{{ list_url }}';
+                }
+            }).then((result) => {
+    
+            });
+        });
+    });
+
+
+
+    //Limpiar campos
+    function limpiarForm() {
+        document.getElementById("limpiarForm2").reset();
+    };
+
+// VALIDACIÓN DE CAMPOS
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("clientForm").addEventListener('submit', validateDataClient);
+    });
+
+    function validateDataClient(evento) {
+
+        evento.preventDefault();
+
+        var surname = document.getElementById("id_surname").value;
+        var surname_client = surname.toUpperCase();
+
+        if (surname_client == "" || surname_client == "null") {
+
+            alertify.error('Apellido: No puede ser un campo vacio. Solo se permiten letras y espacios');
+            document.getElementById('id_surname').focus();
+            return;
+
+        } else if (surname_client != "" || surname_client != "null") {
+
+            if (surname_client.length < 31) {
+                lenght_text = surname_client.length;
+                var flag = true;
+
+                for (var i = 0; i < lenght_text; i = i + 1) {
+
+                    var cadena = surname_client.charAt(i);
+
+                    if ((cadena == "Á") || (cadena == "É") || (cadena == "Í") || (cadena == "Ó") || (cadena == "Ú") || (cadena == "Ü") || (cadena == "A") || (cadena == "B") || (cadena == "C") || (cadena == "D") || (cadena == "E") || (cadena == "F") || (cadena == "G") || (cadena == "H") || (cadena == "I") || (cadena == "J") || (cadena == "K") || (cadena == "L") || (cadena == "M") || (cadena == "N") || (cadena == "Ñ") || (cadena == "O") || (cadena == "P") || (cadena == "Q") || (cadena == "R") || (cadena == "S") || (cadena == "T") || (cadena == "U") || (cadena == "V") || (cadena == "W") || (cadena == "X") || (cadena == "Y") || (cadena == "Z") || (cadena == " ")) {
+                        flag = true;
+                    } else {
+                        flag = false;
+                        i = lenght_text;
+                    }
+                }
+
+                if (flag == false) {
+
+                    alertify.error('Apellido: Solo se permiten letras o espacios');
+                    document.getElementById('id_surname').focus();
+                    return;
+
+                }
+
+            } else if (surname_client.length > 30) {
+
+                alertify.error('Apellido: Solo se permite hasta 30 caracteres');
+                document.getElementById('id_surname').focus();
+                return;
+
+            }
+        }
+
+
+        var name = document.getElementById("id_name").value;
+        var name_client = name.toUpperCase();
+
+        if (name_client == "" || name_client == "null") {
+
+            alertify.error('Nombre: No puede ser un campo vacio. Solo se permiten letras y espacios');
+            document.getElementById('id_name').focus();
+            return;
+
+        } else if (name_client != "" || name_client != "null") {
+
+            if (name_client.length < 31) {
+                lenght_text = name_client.length;
+                var flag = true;
+
+                for (var i = 0; i < lenght_text; i = i + 1) {
+
+                    var cadena = name_client.charAt(i);
+
+                    if ((cadena == "Á") || (cadena == "É") || (cadena == "Í") || (cadena == "Ó") || (cadena == "Ú") || (cadena == "Ü") || (cadena == "A") || (cadena == "B") || (cadena == "C") || (cadena == "D") || (cadena == "E") || (cadena == "F") || (cadena == "G") || (cadena == "H") || (cadena == "I") || (cadena == "J") || (cadena == "K") || (cadena == "L") || (cadena == "M") || (cadena == "N") || (cadena == "Ñ") || (cadena == "O") || (cadena == "P") || (cadena == "Q") || (cadena == "R") || (cadena == "S") || (cadena == "T") || (cadena == "U") || (cadena == "V") || (cadena == "W") || (cadena == "X") || (cadena == "Y") || (cadena == "Z") || (cadena == " ")) {
+                        flag = true;
+                    } else {
+                        flag = false;
+                        i = lenght_text;
+                    }
+                }
+
+                if (flag == false) {
+
+                    alertify.error('Nombre: Solo se permiten letras o espacios');
+                    document.getElementById('id_name').focus();
+                    return;
+
+                }
+
+            } else if (name_client.length > 30) {
+
+                alertify.error('Nombre: Solo se permite hasta 30 caracteres');
+                document.getElementById('id_name').focus();
+                return;
+
+            }
+        }
+
+
+        var expresion_correo = /\w+@\w+\.+[a-z]/;
+        var correo = document.getElementById("id_email").value;
+
+        if (correo.length !== 0) {
+            if (!expresion_correo.test(correo)) {
+                alertify.error('Correo: Ingrese un correo válido');
+                document.getElementById('id_email').focus();
+                return;
+            }
+        }
+
+
+        /*var expresion_numero = /[0-9]-' '/;
+        var movil = document.getElementById("id_mobile").value;
+        console.log(movil)
+        if (movil.length !== 0) {
+            if (!expresion_numero.test(movil)) {
+                alertify.error('Movil: Solo se permite números');
+                document.getElementById('id_mobile').focus();
+                return;
+            }
+
+            if (movil.length > 20) {
+                alertify.error('Movil: Solo se permite hasta 20 números');
+                document.getElementById('id_mobile').focus();
+                return;
+            }
+        }
+
+
+        var telefono = document.getElementById("id_phone").value;
+
+        if (telefono.length !== 0) {
+            if (!expresion_numero.test(telefono) || id_phone) {
+                console.log(id_phone);
+                console.log(telefono);
+                alertify.error('Teléfono: Solo se permite números');
+                document.getElementById('id_phone').focus();
+                return;
+            }
+
+            if (telefono.length > 20) {
+                alertify.error('Teléfono: Solo se permite hasta 20 números');
+                document.getElementById('id_phone').focus();
+                return;
+            }
+        }*/
+
+        var depart = document.getElementById("id_department").value;
+        var departamento = depart.toUpperCase();
+
+        if (departamento != "" || departamento != "null") {
+
+            if (departamento.length < 21) {
+                lenght_text = departamento.length;
+                var flag = true;
+
+                for (var i = 0; i < lenght_text; i = i + 1) {
+
+                    var cadena = departamento.charAt(i);
+
+                    if ((cadena == "Á") || (cadena == "É") || (cadena == "Í") || (cadena == "Ó") || (cadena == "Ú") || (cadena == "Ü") || (cadena == "A") || (cadena == "B") || (cadena == "C") || (cadena == "D") || (cadena == "E") || (cadena == "F") || (cadena == "G") || (cadena == "H") || (cadena == "I") || (cadena == "J") || (cadena == "K") || (cadena == "L") || (cadena == "M") || (cadena == "N") || (cadena == "Ñ") || (cadena == "O") || (cadena == "P") || (cadena == "Q") || (cadena == "R") || (cadena == "S") || (cadena == "T") || (cadena == "U") || (cadena == "V") || (cadena == "W") || (cadena == "X") || (cadena == "Y") || (cadena == "Z") || (cadena == " ")) {
+                        flag = true;
+                    } else {
+                        flag = false;
+                        i = lenght_text;
+                    }
+                }
+
+                if (flag == false) {
+
+                    alertify.error('Departamento: Solo se permiten letras o espacios');
+                    document.getElementById('id_department').focus();
+                    return;
+
+                }
+
+            } else if (departamento.length > 20) {
+
+                alertify.error('Departamento: Solo se permite hasta 20 caracteres');
+                document.getElementById('id_department').focus();
+                return;
+
+            }
+        }
+
+
+        var city = document.getElementById("id_province").value;
+        var provincia = city.toUpperCase();
+
+        if (provincia != "" || provincia != "null") {
+
+            if (provincia.length < 21) {
+                lenght_text = provincia.length;
+                var flag = true;
+
+                for (var i = 0; i < lenght_text; i = i + 1) {
+
+                    var cadena = provincia.charAt(i);
+
+                    if ((cadena == "Á") || (cadena == "É") || (cadena == "Í") || (cadena == "Ó") || (cadena == "Ú") || (cadena == "Ü") || (cadena == "A") || (cadena == "B") || (cadena == "C") || (cadena == "D") || (cadena == "E") || (cadena == "F") || (cadena == "G") || (cadena == "H") || (cadena == "I") || (cadena == "J") || (cadena == "K") || (cadena == "L") || (cadena == "M") || (cadena == "N") || (cadena == "Ñ") || (cadena == "O") || (cadena == "P") || (cadena == "Q") || (cadena == "R") || (cadena == "S") || (cadena == "T") || (cadena == "U") || (cadena == "V") || (cadena == "W") || (cadena == "X") || (cadena == "Y") || (cadena == "Z") || (cadena == " ")) {
+                        flag = true;
+                    } else {
+                        flag = false;
+                        i = lenght_text;
+                    }
+                }
+
+                if (flag == false) {
+
+                    alertify.error('Provincia: Solo se permiten letras o espacios');
+                    document.getElementById('id_province').focus();
+                    return;
+
+                }
+
+            } else if (provincia.length > 20) {
+
+                alertify.error('Provincia: Solo se permite hasta 20 caracteres');
+                document.getElementById('id_province').focus();
+                return;
+
+            }
+        }
+
+
+        var cod_postal = document.getElementById("id_postal_code").value;
+
+        if (cod_postal != "" || cod_postal != "null") {
+
+            if (cod_postal.lenght < 9) {
+                lenght_number = cod_postal.lenght;
+                var flag = true;
+
+                for (var i = 0; i < lenght_number; i = i + 1) {
+                    var cadena_num = cod_postal.charAt(i);
+
+                    if ((cadena_num == 0) || (cadena_num == 1) || (cadena_num == 2) || (cadena_num == 3) || (cadena_num == 4) || (cadena_num == 5) || (cadena_num == 6) || (cadena_num == 7) || (cadena_num == 8) || (cadena_num == 9)) {
+                        flag = true;
+                    } else {
+                        flag = false;
+                        i = lenght_text;
+                    }
+                }
+
+                if (flag == false) {
+
+                    alertify.error('Código Postal: Solo se permiten números');
+                    document.getElementById('id_postal_code').focus();
+                    return;
+
+                }
+
+            } else if (cod_postal.length > 8) {
+
+                alertify.error('Código Postal: Solo se permite hasta 8 números');
+                document.getElementById('id_postal_code').focus();
+                return;
+
+            }
+
+        }
+
+        this.submit();
+
+    }
+</script>
+<!---->
+{% endblock content_data %}
+<!-- FIN Bloque Panel de Datos -->

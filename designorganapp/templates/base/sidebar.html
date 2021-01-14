@@ -1,0 +1,152 @@
+{% load static %}
+<aside class="main-sidebar sidebar-dark white-text elevation-4" style="background-color:#0D0D0D;">
+    <a style="background-color:#0D0D0D;" href="#" class="brand-link">
+        <img src="{% static 'image/logo.jpg' %}" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">DesignOrganApp</span>
+    </a>
+    <div class="sidebar">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="{{ request.user.get_image }}" class="img-circle" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">{{ request.user.username }}</a>
+            </div>
+        </div>
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                <li class="nav-header"><i class="nav-icon fas fa-download"></i> Ingresos</li>
+                <li class="nav-item">
+                    <a href="{% url 'productos_app:sale-create' %}" class="nav-link">
+                        <i class="nav-icon fas fa-cart-plus"></i>
+                        <p>
+                            Ventas
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'productos_app:listar-produccion' %}" class="nav-link">
+                        <i class="nav-icon fas fa-industry"></i>
+                        <p>
+                            Producción
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'productos_app:listar-id-one-produccion' %}" class="nav-link">
+                        <i class="nav-icon fas fa-pencil-ruler"></i>
+                        <p>
+                            Diseño
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'productos_app:listar-id-two-produccion' %}" class="nav-link">
+                        <i class="nav-icon fas fa-print"></i>
+                        <p>
+                            Impresión
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'productos_app:listar-id-three-produccion' %}" class="nav-link">
+                        <i class="nav-icon fas fa-fill-drip"></i>
+                        <p>
+                            Sublimación
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'productos_app:listar-id-four-produccion' %}" class="nav-link">
+                        <i class="nav-icon fas fa-tshirt"></i>
+                        <p>
+                            Confección
+                        </p>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-header"><i class="nav-icon fas fa-database"></i> Base de Datos</li>
+                <li class="nav-item">
+                    <a href="{% url 'productos_app:lista-clientes' %}" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Clientes
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'productos_app:listar-estados' %}" class="nav-link">
+                        <i class="nav-icon far fa-list-alt"></i>
+                        <p>
+                            Estados
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'productos_app:locality-list' %}" class="nav-link">
+                        <i class="nav-icon fas fa-map-marker-alt"></i>
+                        <p>
+                            Localidades
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'productos_app:province-list' %}" class="nav-link">
+                        <i class="nav-icon fas fa-globe-americas"></i>   
+                        <p>
+                            Provincias
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'productos_app:category-list' %}" class="nav-link">
+                        <i class="nav-icon fas fa-tshirt"></i>
+                        <p>
+                            Tipo de Prendas
+                        </p>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-header"><i class="nav-icon fas fa-signal"></i> Informes</li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-chart-bar"></i>
+                        <p>
+                            Reporte de Ventas
+                        </p>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-header"><i class="nav-icon fas fa-users"></i> Usuarios</li>
+                <li class="nav-item">
+                    <a href="{% url 'user:user-list' %}" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Usuarios
+                        </p>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-header"><i class="nav-icon fas fa-sign-out-alt"></i> Logout</li>
+                <li class="nav-item">
+                    <a href="{% url 'access:logout' %}" class="nav-link">
+                        <i class="nav-icon fas fa-power-off"></i>
+                        <p>
+                            Cerrar Sesión
+                        </p>
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
+    </div>
+</aside>

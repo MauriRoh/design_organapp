@@ -1,0 +1,113 @@
+{% extends "body.html" %}
+
+{% load static %}
+
+{% block head %}
+    <!----------------------------  DataTable ------------------------------------>
+    <link rel="stylesheet" href="{% static 'lib/datatables/datatables-1.10.22/css/dataTables.bootstrap4.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'lib/datatables/datatables-1.10.22/plugins/css/responsive.bootstrap4.min.css' %}" />
+    <script src="{% static 'lib/datatables/datatables-1.10.22/js/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'lib/datatables/datatables-1.10.22/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'lib/datatables/datatables-1.10.22/plugins/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'lib/datatables/datatables-1.10.22/plugins/js/responsive.bootstrap4.min.js' %}"></script>
+<!---------------------------- FIN DataTable ------------------------------------>
+    {% block head_list %}
+
+    {% endblock head_list %}
+
+{% endblock head %}
+<!---->
+
+<!-- BLOCK DATA -->
+{% block content_data %}
+    <div class="card card-default">
+        <div class="card-header navbar-dark white-text" style="background-color:#0A0EF0;">
+            {% block header_title %}
+
+            {% endblock header_title %}
+        </div>      
+
+        <div class="card-body">
+
+            <!-- DATA SEARCH -->
+            <form method="GET">{% csrf_token %}
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {% block data_search %}
+
+                            {% endblock data_search %}
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+            <!-- END DATA SEARCH -->
+
+            <!-- TABLE -->
+            <table class="table table-bordered table-hover table-sm text-center" id="data">
+                <thead style="background-color:#3D6AF2;" class="white-text">
+                    <!--  BLOCK COLUMNS  -->
+                    {% block columns %}
+
+                    {% endblock columns %}
+                    <!--  END BLOCK COLUMNS  -->
+                </thead>
+
+                <tbody>
+                    <!--  END BLOCK ROWS  -->
+                    {% block rows %}
+    
+                    {% endblock rows %}
+                    <!--  END BLOCK ROWS  -->
+                </tbody>
+
+            </table>
+            <!-- TABLE -->
+
+        </div>
+
+        <div class="card-footer">
+            {% block buttons_list %}
+                <a href="{{ create_url }}" style="background-color:#0A0EF0;" class="btn white-text btn-rounded btn-sm">
+                    Nuevo Registro <i class="fas fa-plus ml-1"></i>
+                </a>
+            {% endblock %}
+        </div>
+
+        
+    </div>
+{% endblock content_data %}
+<!-- BLOCK DATA -->
+
+
+<!---------------------------- JavaScript Extra ------------------------------------>
+{% block javascript %}
+    <script type="application/javascript">
+        $(function () {
+            $('#data').DataTable({
+                responsive: true,
+                autoWidth: false
+            });
+
+            $('#btnloadlistcategory').on('click', function () {
+                $.ajax({
+                    url: window.location.pathname,
+                    type: 'POST',
+                    data: {id: 4},
+                    dataType: 'json'
+                }).done(function (data) {
+                    console.log(data);
+                    alert('AbcAbcAbcAbc')
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    alert(textStatus + ': ' + errorThrown);
+                }).always(function (data) {
+    
+                });
+            });
+            
+        });
+    </script>
+{% endblock javascript %}
+<!---------------------------- END JavaScript Extra ------------------------------------>

@@ -1,0 +1,463 @@
+{% extends "body.html" %}
+<!---->
+{% load static %}
+<!-- APP Widgwt Tweaks -->
+{% load widget_tweaks %}
+
+
+<!-- Bloque de Datos -->
+{% block content_data %}
+<div class="card card-default">
+
+    <div class="card navbar-dark white-text" style="background-color:#0A0EF0;">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fas fa-users"></i>
+                <font _mstmutation="1" _msthash="2599285" _msttexthash="94939"> {{title}} </font>
+            </h3>
+        </div>
+    </div>
+
+
+    <!-- CARGA DE DATOS -->
+    <form method="POST" id="clientForm" class="form-register"> {% csrf_token %}
+
+        <div class="card-body">
+
+            {% if form.errors %}
+
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true" _msthash="3580954" _msttexthash="19565">×</button>
+                <h5><i class="fas fa-exclamation-triangle"></i>
+                    <font _mstmutation="1" _msthash="3077451" _msttexthash="103974">¡Ha ocurrido un ERROR al intentar registrar un nuevo Cliente!. No se permite Apellido, Nombre e Mail duplicados.</font>
+                </h5>
+
+                <ul>
+                    <font _mstmutation="1" _msthash="2750085" _msttexthash="21262462">
+
+                        {% for field in form %}
+                        <!---->
+                        {% for error in field.errors %}
+                        <!---->
+                        <li>{{ error }}</li>
+                        <!---->
+                        {% endfor %}
+                        <!---->
+                        {% endfor %}
+
+                    </font>
+                </ul>
+            </div>
+
+            {% endif %}
+
+            <div class="form-row">
+
+                <div class="form-group col-md-6 input-group">
+                    <span class="input-group-text" id="{{form.id}}">Código Cliente:</span>
+                    <label for="code_client">{{ form.label }}</label>
+                    <!---->
+                    {{ form.code_client | add_class:'form-control' }}
+
+                </div>
+
+            </div>
+            <div class="form-row">
+
+                <div class="form-group col-md-6 input-group">
+                    <span class="input-group-text" id="{{form.id}}">Apellido:</span>
+                    <label for="surname">{{ form.label }}</label>
+                    <!---->
+                    {{ form.surname | add_class:'form-control' }}
+                </div>
+
+                <div class="form-group col-md-6 input-group">
+                    <span class="input-group-text" id="{{form.id}}">Nombre:</span>
+                    <label for="name">{{ form.label }}</label>
+                    <!---->
+                    {{ form.name | add_class:'form-control' }}
+                </div>
+
+            </div>
+            <div class="form-row">
+
+                <div class="form-group col-md-6 input-group">
+                    <span class="input-group-text" id="{{form.id}}">Género:</span>
+                    <label for="gender">{{ form.label }}</label>
+                    <!---->
+                    {{ form.gender | add_class:'form-control' }}
+                </div>
+
+                <div class="form-group col-md-6 input-group">
+                    <span class="input-group-text" id="{{form.id}}">Email:</span>
+                    <label for="email">{{ form.label }}</label>
+                    <!---->
+                    {{ form.email | add_class:'form-control' }}
+                </div>
+
+            </div>
+            <div class="form-row">
+
+                <div class="form-group col-md-6 input-group">
+                    <span class="input-group-text" id="{{form.id}}">Móvil:</span>
+                    <label for="mobile">{{ form.label }}</label>
+                    <!---->
+                    {{ form.mobile | add_class:'form-control' }}
+                </div>
+
+                <div class="form-group col-md-6 input-group">
+                    <span class="input-group-text" id="{{form.id}}">Teléfono:</span>
+                    <label for="phone">{{ form.label }}</label>
+                    <!---->
+                    {{ form.phone | add_class:'form-control' }}
+                </div>
+
+            </div>
+            <div class="form-row">
+
+                <div class="form-group col-md-6 input-group">
+                    <span class="input-group-text" id="{{form.id}}">Dirección:</span>
+                    <label for="address">{{ form.label }}</label>
+                    <!---->
+                    {{ form.address | add_class:'form-control' }}
+                </div>
+
+                <div class="form-group col-md-6 input-group">
+                    <span class="input-group-text" id="{{form.id}}">Departamento:</span>
+                    <label for="department">{{ form.label }}</label>
+                    <!---->
+                    {{ form.department | add_class:'form-control' }}
+                </div>
+
+            </div>
+            <div class="form-row">
+
+                <div class="form-group col-md-6 input-group">
+                    <span class="input-group-text" id="{{form.id}}">Barrio:</span>
+                    <label for="neighborhood">{{ form.label }}</label>
+                    <!---->
+                    {{ form.neighborhood | add_class:'form-control' }}
+                </div>
+
+                <div class="form-group col-md-6 input-group">
+                    <span class="input-group-text" id="{{form.id}}">Localidad:</span>
+                    <label for="locality">{{ form.label }}</label>
+                    <!---->
+                    {{ form.locality | add_class:'form-control' }}
+                </div>
+
+            </div>
+            <div class="form-row">
+
+                <div class="form-group col-md-6 input-group">
+                    <span class="input-group-text" id="{{form.id}}">Provincia:</span>
+                    <label for="province">{{ form.label }}</label>
+                    <!---->
+                    {{ form.province | add_class:'form-control' }}
+                </div>
+
+                <div class="form-group col-md-6 input-group">
+                    <span class="input-group-text" id="{{form.id}}">Código Postal:</span>
+                    <label for="postal_code">{{ form.label }}</label>
+                    <!---->
+                    {{ form.postal_code | add_class:'form-control' }}
+                </div>
+
+            </div>
+            <div class="form-row">
+
+                <span class="input-group-text" id="{{form.id}}">Otros:</span>
+                <label for="otros">{{ form.label }}</label>
+                <!---->
+                {{ form.others | add_class:'form-control' }}
+
+            </div>
+
+        </div>
+
+        <p id="mensajeError"></p>
+        <div class="container">
+            <div class="row justify-content-center">
+                <button type="submit" style="background-color:#02732A;" class="btn white-text btn-rounded btn-sm" class="btn">Actualizar <i class="fas fa-sync ml-1"></i></button>
+                <a href="{% url 'productos_app:lista-clientes' %}" style="background-color:#F24130;" class="btn white-text btn-rounded btn-sm" type="submit" class="btn">Cancelar <i class="fas fa-times ml-1"></i></a>
+            </div>
+        </div>
+
+    </form>
+    <!--FIN CARGA DE DATOS -->
+</div>
+
+
+
+<!-- JavaScript -->
+{% block js %}
+<script type="application/javascript">
+    function limpiarFormClient() {
+        document.getElementById("clientForm").reset();
+    }
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("clientForm").addEventListener('submit', validateDataClient);
+    });
+
+    function validateDataClient(evento) {
+
+        evento.preventDefault();
+
+        var surname = document.getElementById("id_surname").value;
+        var surname_client = surname.toUpperCase();
+
+        if (surname_client == "" || surname_client == "null") {
+
+            alertify.error('Apellido: No puede ser un campo vacio. Solo se permiten letras y espacios');
+            document.getElementById('id_surname').focus();
+            return;
+
+        } else if (surname_client != "" || surname_client != "null") {
+
+            if (surname_client.length < 31) {
+                lenght_text = surname_client.length;
+                var flag = true;
+
+                for (var i = 0; i < lenght_text; i = i + 1) {
+
+                    var cadena = surname_client.charAt(i);
+
+                    if ((cadena == "Á") || (cadena == "É") || (cadena == "Í") || (cadena == "Ó") || (cadena == "Ú") || (cadena == "Ü") || (cadena == "A") || (cadena == "B") || (cadena == "C") || (cadena == "D") || (cadena == "E") || (cadena == "F") || (cadena == "G") || (cadena == "H") || (cadena == "I") || (cadena == "J") || (cadena == "K") || (cadena == "L") || (cadena == "M") || (cadena == "N") || (cadena == "Ñ") || (cadena == "O") || (cadena == "P") || (cadena == "Q") || (cadena == "R") || (cadena == "S") || (cadena == "T") || (cadena == "U") || (cadena == "V") || (cadena == "W") || (cadena == "X") || (cadena == "Y") || (cadena == "Z") || (cadena == " ")) {
+                        flag = true;
+                    } else {
+                        flag = false;
+                        i = lenght_text;
+                    }
+                }
+
+                if (flag == false) {
+
+                    alertify.error('Apellido: Solo se permiten letras o espacios');
+                    document.getElementById('id_surname').focus();
+                    return;
+
+                }
+
+            } else if (surname_client.length > 30) {
+
+                alertify.error('Apellido: Solo se permite hasta 30 caracteres');
+                document.getElementById('id_surname').focus();
+                return;
+
+            }
+        }
+
+
+        var name = document.getElementById("id_name").value;
+        var name_client = name.toUpperCase();
+
+        if (name_client == "" || name_client == "null") {
+
+            alertify.error('Nombre: No puede ser un campo vacio. Solo se permiten letras y espacios');
+            document.getElementById('id_name').focus();
+            return;
+
+        } else if (name_client != "" || name_client != "null") {
+
+            if (name_client.length < 31) {
+                lenght_text = name_client.length;
+                var flag = true;
+
+                for (var i = 0; i < lenght_text; i = i + 1) {
+
+                    var cadena = name_client.charAt(i);
+
+                    if ((cadena == "Á") || (cadena == "É") || (cadena == "Í") || (cadena == "Ó") || (cadena == "Ú") || (cadena == "Ü") || (cadena == "A") || (cadena == "B") || (cadena == "C") || (cadena == "D") || (cadena == "E") || (cadena == "F") || (cadena == "G") || (cadena == "H") || (cadena == "I") || (cadena == "J") || (cadena == "K") || (cadena == "L") || (cadena == "M") || (cadena == "N") || (cadena == "Ñ") || (cadena == "O") || (cadena == "P") || (cadena == "Q") || (cadena == "R") || (cadena == "S") || (cadena == "T") || (cadena == "U") || (cadena == "V") || (cadena == "W") || (cadena == "X") || (cadena == "Y") || (cadena == "Z") || (cadena == " ")) {
+                        flag = true;
+                    } else {
+                        flag = false;
+                        i = lenght_text;
+                    }
+                }
+
+                if (flag == false) {
+
+                    alertify.error('Nombre: Solo se permiten letras o espacios');
+                    document.getElementById('id_name').focus();
+                    return;
+
+                }
+
+            } else if (name_client.length > 30) {
+
+                alertify.error('Nombre: Solo se permite hasta 30 caracteres');
+                document.getElementById('id_name').focus();
+                return;
+
+            }
+        }
+
+
+        var expresion_correo = /\w+@\w+\.+[a-z]/;
+        var correo = document.getElementById("id_email").value;
+
+        if (!expresion_correo.test(correo) || ) {
+            alertify.error('Correo: Ingrese un correo válido');
+            document.getElementById('id_email').focus();
+            return;
+        }
+
+
+        var expresion_numero = /[0-9]-' '/;
+        var movil = document.getElementById("id_mobile").value;
+
+        if (!expresion_numero.test(movil)) {
+            alertify.error('Movil: Solo se permite números');
+            document.getElementById('id_mobile').focus();
+            return;
+        }
+
+        if (movil.length > 20) {
+            alertify.error('Movil: Solo se permite hasta 20 números');
+            document.getElementById('id_mobile').focus();
+            return;
+        }
+
+
+        var telefono = document.getElementById("id_phone").value;
+
+        if (!expresion_numero.test(telefono) || id_phone) {
+            console.log(id_phone);
+            console.log(telefono);
+            alertify.error('Teléfono: Solo se permite números');
+            document.getElementById('id_phone').focus();
+            return;
+        }
+
+        if (telefono.length > 20) {
+            alertify.error('Teléfono: Solo se permite hasta 20 números');
+            document.getElementById('id_phone').focus();
+            return;
+        }
+
+
+        var depart = document.getElementById("id_department").value;
+        var departamento = depart.toUpperCase();
+
+        if (departamento != "" || departamento != "null") {
+
+            if (departamento.length < 21) {
+                lenght_text = departamento.length;
+                var flag = true;
+
+                for (var i = 0; i < lenght_text; i = i + 1) {
+
+                    var cadena = departamento.charAt(i);
+
+                    if ((cadena == "Á") || (cadena == "É") || (cadena == "Í") || (cadena == "Ó") || (cadena == "Ú") || (cadena == "Ü") || (cadena == "A") || (cadena == "B") || (cadena == "C") || (cadena == "D") || (cadena == "E") || (cadena == "F") || (cadena == "G") || (cadena == "H") || (cadena == "I") || (cadena == "J") || (cadena == "K") || (cadena == "L") || (cadena == "M") || (cadena == "N") || (cadena == "Ñ") || (cadena == "O") || (cadena == "P") || (cadena == "Q") || (cadena == "R") || (cadena == "S") || (cadena == "T") || (cadena == "U") || (cadena == "V") || (cadena == "W") || (cadena == "X") || (cadena == "Y") || (cadena == "Z") || (cadena == " ")) {
+                        flag = true;
+                    } else {
+                        flag = false;
+                        i = lenght_text;
+                    }
+                }
+
+                if (flag == false) {
+
+                    alertify.error('Departamento: Solo se permiten letras o espacios');
+                    document.getElementById('id_department').focus();
+                    return;
+
+                }
+
+            } else if (departamento.length > 20) {
+
+                alertify.error('Departamento: Solo se permite hasta 20 caracteres');
+                document.getElementById('id_department').focus();
+                return;
+
+            }
+        }
+
+
+        var city = document.getElementById("id_province").value;
+        var provincia = city.toUpperCase();
+
+        if (provincia != "" || provincia != "null") {
+
+            if (provincia.length < 21) {
+                lenght_text = provincia.length;
+                var flag = true;
+
+                for (var i = 0; i < lenght_text; i = i + 1) {
+
+                    var cadena = provincia.charAt(i);
+
+                    if ((cadena == "Á") || (cadena == "É") || (cadena == "Í") || (cadena == "Ó") || (cadena == "Ú") || (cadena == "Ü") || (cadena == "A") || (cadena == "B") || (cadena == "C") || (cadena == "D") || (cadena == "E") || (cadena == "F") || (cadena == "G") || (cadena == "H") || (cadena == "I") || (cadena == "J") || (cadena == "K") || (cadena == "L") || (cadena == "M") || (cadena == "N") || (cadena == "Ñ") || (cadena == "O") || (cadena == "P") || (cadena == "Q") || (cadena == "R") || (cadena == "S") || (cadena == "T") || (cadena == "U") || (cadena == "V") || (cadena == "W") || (cadena == "X") || (cadena == "Y") || (cadena == "Z") || (cadena == " ")) {
+                        flag = true;
+                    } else {
+                        flag = false;
+                        i = lenght_text;
+                    }
+                }
+
+                if (flag == false) {
+
+                    alertify.error('Provincia: Solo se permiten letras o espacios');
+                    document.getElementById('id_province').focus();
+                    return;
+
+                }
+
+            } else if (provincia.length > 20) {
+
+                alertify.error('Provincia: Solo se permite hasta 20 caracteres');
+                document.getElementById('id_province').focus();
+                return;
+
+            }
+        }
+
+
+        var cod_postal = document.getElementById("id_postal_code").value;
+
+        if (cod_postal != "" || cod_postal != "null") {
+
+            if (cod_postal.lenght < 9) {
+                lenght_number = cod_postal.lenght;
+                var flag = true;
+
+                for (var i = 0; i < lenght_number; i = i + 1) {
+                    var cadena_num = cod_postal.charAt(i);
+
+                    if ((cadena_num == 0) || (cadena_num == 1) || (cadena_num == 2) || (cadena_num == 3) || (cadena_num == 4) || (cadena_num == 5) || (cadena_num == 6) || (cadena_num == 7) || (cadena_num == 8) || (cadena_num == 9)) {
+                        flag = true;
+                    } else {
+                        flag = false;
+                        i = lenght_text;
+                    }
+                }
+
+                if (flag == false) {
+
+                    alertify.error('Código Postal: Solo se permiten números');
+                    document.getElementById('id_postal_code').focus();
+                    return;
+
+                }
+
+            } else if (cod_postal.length > 8) {
+
+                alertify.error('Código Postal: Solo se permite hasta 8 números');
+                document.getElementById('id_postal_code').focus();
+                return;
+
+            }
+
+        }
+
+        this.submit();
+
+    }
+</script>
+{% endblock js %}
+<!---->
+{% endblock content_data %}
+<!-- FIN Bloque Panel de Datos -->

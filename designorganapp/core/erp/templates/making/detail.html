@@ -1,0 +1,47 @@
+<form action="{% url 'productos_app:detallar-id-four-produccion' production.id %}" method="POST" class="form-register"> {% csrf_token %}
+
+    <div class="modal-dialog modal-full-heigh" role="document">
+        <div class="modal-content">
+
+            <div class="text-center modal-header" style="background-color:#F24130;" class="white-text">
+                <h4 class="white-text modal-title w-100 font-weight-bold">Detalle #{{ production.id }}</h4>
+                <button class="close text-secondary" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+
+            <div class="container">
+
+                <div class="modal-body">
+                    <div class="container-fluid">
+
+                        <p class="card-title"><strong>Tipo: </strong><strong style="color:#F24130;">{{ production.product_type }}</strong></p>
+                        <p class="card-title"><strong>Descripción: </strong><strong style="color:#F24130;">{{ production.product_description }}</strong></p>
+                        <p class="card-title"><strong>Talle: </strong><strong style="color:#F24130;">{{ production.size }}</strong></p>
+                        <p class="card-title"><strong>Cantidad: </strong><strong style="color:#F24130;">{{ production.amount }}</strong></p>
+
+
+                        <p class="card-title"><strong>Observaciones:</strong></p>
+                        <div class="container">
+                            <textarea class="form-control rounded-1" id="exampleFormControlTextarea2" rows="5">{{ production.observation }}</textarea>
+                        </div>
+
+                        <p class="card-title"><strong>Estado: </strong><strong style="color:#F24130;">{{ production.state }}</strong></p>
+                        <p class="card-title"><strong>Emisión: </strong><strong style="color:#F24130;">{{ production.today_date }}</strong></p>
+                        <p class="card-title"><strong>Vencimiento: </strong><strong style="color:#F24130;">{{ production.due_date }}</strong></p>
+                        <div class="form-row mb-4 text-center">
+                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Food/8-col/img (5).jpg" class="rounded-lg" height="125px" width="140px" alt="avatar">
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer justify-content-center">
+                    <button style="background-color:#F24130;" class="btn white-text btn-rounded btn-sm" type="button" data-dismiss="modal">Cerrar <i class="fas fa-times ml-1"></i></button>
+                </div>
+
+            </div>
+        </div>
+</form>

@@ -1,0 +1,221 @@
+{% extends "body.html" %}
+<!---->
+{% load static %}
+<!-- APP Widgwt Tweaks -->
+{% load widget_tweaks %}
+
+<!---->
+{% block head %}
+    <!----------------------------  DataTable ------------------------------------>
+    <link rel="stylesheet" href="{% static 'lib/datatables/datatables-1.10.22/css/dataTables.bootstrap4.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'lib/datatables/datatables-1.10.22/plugins/css/responsive.bootstrap4.min.css' %}" />
+    <script src="{% static 'lib/datatables/datatables-1.10.22/js/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'lib/datatables/datatables-1.10.22/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'lib/datatables/datatables-1.10.22/plugins/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'lib/datatables/datatables-1.10.22/plugins/js/responsive.bootstrap4.min.js' %}"></script>
+    <!---------------------------- FIN DataTable ------------------------------------>
+
+    <!---------------------------- FECHA - DATA ------------------------------------>
+    <script src="{% static 'lib/moment-2.25.3/moment-with-locales.js' %}"></script>
+    <script src="{% static 'lib/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.js' %}"></script>
+    <link href="{% static 'lib/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet"/>
+    <!---------------------------- FIN DataTable ------------------------------------>
+
+    <script src="{% static 'app/production/js/functions.js' %}"></script>
+
+{% endblock head %}
+<!---->
+
+<!-- Bloque de Datos -->
+{% block content_data %}
+
+<!-- /.card-header -->
+<div class="card card-default">
+    <div class="card navbar-dark white-text" style="background-color:#0A0EF0;">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fas fa-industry"></i>
+                <font _mstmutation="1" _msthash="2599285" _msttexthash="94939"> {{title}} </font>
+            </h3>
+        </div>
+    </div>
+
+    <div class="card-body">
+
+        <!-- BUSCADOR / NUEVO REGISTRO -->
+        <form method="GET">{% csrf_token %}
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Buscar por:</span>
+                            <input class="form-control" type="text" name="productionkeyword" id="productionkeyword" value="{{request.GET.productionkeyword}}" placeholder="Product">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-lg-1">
+                        <button id="btnloadlistproductions" style="background-color:#0A0EF0;" class="btn white-text btn-rounded btn-sm" type="submit"><i class="fas fa-search ml-1"></i></button>
+                    </div>
+                    <div class="col-lg-1">
+                        <a href="{% url 'productos_app:alta-produccion' %}" style="background-color:#0A0EF0;" class="btn white-text btn-rounded btn-sm"> <i class="fas fa-plus ml-1"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label>Fecha Emisión:</label>
+                        <div class="form-group">
+                            <div class="input-group date" id="today_date" data-target-input="nearest">
+                                <input type="text" name="today_date" id="today_date" value="today_date" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
+                                <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-3">
+                        <label>Vencimiento:</label>
+                        <div class="form-group">
+                            <div class="input-group date" id="due_date" data-target-input="nearest">
+                                <input type="text" name="due_date" id="due_date" value="due_date" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
+                                <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <!-- FIN BUSCADOR / NUEVO REGISTRO -->
+
+        <!-- TABLE -->
+        <table id="dtBasicExample" class="table table-striped table-hover table-sm text-center" cellspacing="0" width="100%">
+            <thead style="background-color:#3D6AF2;" class="white-text">
+                <tr>
+                    <th class="th-sm">ID</th>
+                    <th class="th-sm">Acción</th>
+                    <th class="th-sm">Estados</th>
+                    <th class="th-sm">Tipo Prenda</th>
+                    <th class="th-sm">Descripción</th>
+                    <th class="th-sm">Talle</th>
+                    <th class="th-sm">Cantidad</th>
+                    <th class="th-sm">Imagen</th>
+                    <th class="th-sm">Precio</th>
+                    <th class="th-sm">Emisión</th>
+                    <th class="th-sm">Vencimiento</th>
+                    <th class="th-sm">Observación</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i_list in listproductions %}
+                <tr>
+                    <td> {{ i_list.id }} </td>
+                    <td>
+                        <a href="{% url 'productos_app:modificar-produccion' i_list.id %}" style="background-color:#3D6AF2;" class="btn white-text btn-rounded sm-1" role="button" aria-pressed="true"><i class="far fa-edit sm-1"></i></a>
+                        <button type="button" onclick="modal_production_detail('{% url 'productos_app:detallar-produccion' i_list.id %}')" style="background-color:#7B84DB;" class="btn white-text btn-floating btn-sm-1" role="button" aria-pressed="true"><i class="far fa-file-alt sm-1"></i></button>
+                        <a href="{% url 'productos_app:eliminar-produccion' i_list.id %}" style="background-color:#F24130;" class="btn white-text btn-floating btn-sm-1" role="button" aria-pressed="true"><i class="fas fa-trash-alt sm-1"></i></a>
+                    </td>
+                    <td>
+                        {% if i_list.state.id == 1 %}
+                        <p class="btn white-text btn-floating btn-sm" style="background-color:#06af41;">{{i_list.state.state_type}}</p>
+                        {% elif i_list.state.id == 2 %}
+                        <p class="btn white-text btn-floating btn-sm" style="background-color:#f39c12;">{{i_list.state.state_type}}</p>
+                        {% elif i_list.state.id == 3 %}
+                        <p class="btn white-text btn-floating btn-sm" style="background-color:#F2E205;">{{i_list.state.state_type}}</p>
+                        {% elif i_list.state.id == 4 %}
+                        <p class="btn white-text btn-floating btn-sm" style="background-color:#F24130;">{{i_list.state.state_type}}</p>
+                        {% elif i_list.state.id == 5 %}
+                        <p class="btn white-text btn-floating btn-sm" style="background-color:#02732A;">{{i_list.state.state_type}}</p>
+                        {% elif i_list.state.id == 6 %}
+                        <p class="btn text-danger btn-floating btn-sm" style="background-color:#ffffff;">{{i_list.state.state_type}}</p>
+                        {% endif %}
+                    </td>
+
+                    <td> {{ i_list.cat }} </td>
+                    <td> {{ i_list.name }} </td>
+                    <td> {{ i_list.size }} </td>
+                    <td> {{ i_list.amount }} </td>
+                    <td>
+                        {# {{ obj.image }}#}
+                        <img src="{{ i_list.get_image }}" class="img-fluid d-block mx-auto" style="width: 40px; height: 40px;">
+                    </td>
+                    <td><p>$ {{ i_list.product_price }}</p></td>
+                    <td> {{ i_list.today_date }} </td>
+                    <td> {{ i_list.due_date }} </td>
+                    <td> {{ i_list.observation }} </td>
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- FIN TABLE -->
+    </div>
+
+</div>
+
+
+<!-- MODAL QUE LLAMA AL JAVASCRIPT -->
+<div class="modal fade" id="modalproductiondetail" role="dialog">
+</div>
+
+<!--
+<div class="modal fade" id="modalproductiondelete" role="dialog">
+</div>
+-->
+<!-- FIN MODAL -->
+
+
+
+<!-- JavaScript QUE LLAMA AL MODAL DEL HTML-->
+<script>
+    /*Modal Detalle de Productos de la lista*/
+    var $ = jQuery.noConflict();
+
+    function modal_production_detail(url) {
+        $('#modalproductiondetail').load(url, function() {
+            $(this).modal('show');
+        });
+    };
+
+    $(function() {
+        // CALENDARY - DATE
+        $('#today_date').datetimepicker({
+            format: 'YYYY-MM-DD',
+            date: moment().format("YYYY-MM-DD"),
+            locale: 'es',
+            //minDate: moment().format("YYYY-MM-DD")
+        });
+    
+        $('#due_date').datetimepicker({
+            format: 'YYYY-MM-DD',
+            date: moment().format("YYYY-MM-DD"),
+            locale: 'es',
+            //minDate: moment().format("YYYY-MM-DD")
+        });
+    });
+
+    /*Modal Eliminación de Productos de la lista*/
+    //var $ = jQuery.noConflict();
+
+    /*function modal_production_delete(url) {
+        $('#modalproductiondelete').load(url, function() {
+            $(this).modal('show');
+        });
+    };*/
+</script>
+
+{% endblock content_data %}
+<!-- fin JavaScript QUE LLAMA AL MODAL DEL HTML-->

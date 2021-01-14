@@ -1,0 +1,58 @@
+{% extends 'list.html' %}
+
+{% load static %}
+<!-- APP Widgwt Tweaks -->
+{% load widget_tweaks %}
+
+{% block head_list %}
+
+    <script src="{% static 'app/category/js/list.js' %}"></script>
+
+{% endblock head_list %}
+
+
+<!--  TITLE ENTITY -->
+{% block header_title %}
+    <h3 class="card-title">
+        <i class="fas fas fa-industry"></i>
+        <font _mstmutation="1" _msthash="2599285" _msttexthash="94939"> {{title}} </font>
+    </h3>
+{% endblock header_title %}
+<!--  END TITLE ENTITY -->
+
+
+<!--  DATA SEARCH -->
+{% block data_search %}
+    <label>Buscar por:</label>
+    <div class="input-group-prepend">
+        <input class="form-control" type="text" name="categorykeyword" id="categorykeyword" value="{{request.GET.categorykeyword}}" placeholder="Type garment">
+        <button id="btnloadlistcategory" style="background-color:#0A0EF0;" class="btn white-text btn-rounded btn-sm" class="btn" type="submit">Buscar <i class="fas fa-search ml-1"></i></button>
+    </div>
+{% endblock data_search %}
+<!--  END DATA SEARCH -->
+
+
+<!--------------  TABLE -------------->
+{% block columns %}
+    <!--  COLUMNS -->
+    <tr>
+        <th scope="col" style="width: 10%;">Nro</th>
+        <th scope="col" style="width: 80%;">Tipo de Prenda</th>
+        <th scope="col" style="width: 10%;">Acción</th>
+    </tr>
+    <!-- END COLUMNS -->
+{% endblock columns %}
+
+
+{% block rows %}
+    <!-- BLOCK ROWS DATA -->
+
+    <!-- END BLOCK ROWS DATA -->
+{% endblock rows %}
+<!--  END TABLE -->
+
+<!---------------------------- JavaScript Extra ------------------------------------>
+{% block javascript %}
+    
+{% endblock javascript %}
+<!---------------------------- END JavaScript Extra ------------------------------------>

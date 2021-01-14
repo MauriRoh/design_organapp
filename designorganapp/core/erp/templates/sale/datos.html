@@ -1,0 +1,317 @@
+<div class="form-group">
+    <label>Buscar por Producción:</label>
+    <div class="input-group">
+        <input type="text" class="form-control" name="search_2" placeholder="Ingrese un Tipo de Prenda" autocomplete="off">
+        <span class="input-group-append">
+            <button style="background-color:#F24130;" class="btn white-text input-group-text"><i class="fas fa-times"></i></button>
+        </span>
+    </div>
+</div>
+
+
+
+<div class="form-group">
+    <label>Buscar por Stock:</label>
+    {{ formStock.search }}
+</div>
+
+
+
+
+<script>
+/* Buscador y Auto Comoplet de producgtos con Select2 - Este es el final de todos los vídeos*/
+// Vista 
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'search_product_id':
+                data = [{'id': '', 'text': '----------'}]
+                produccion = Production.objects.filter(cat_id=request.POST['id'])
+                for i in produccion:
+                    data.append({'id': i.id, 'text': i.name,'data': i.cat.toJSON()})
+            elif action == 'autocomplete':
+                data = []
+                categorias = Category.objects.filter(name__icontains=request.POST['term'])[0:30]
+                for i in categorias:
+                    item = i.toJSON()
+                    item['text'] = i.name
+                    data.append(item)
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+
+
+
+    // SEARCH PRODUCTS
+    var select_products = $('select[name="productions"]');
+    $(function () {
+
+        $('.select2').select2({
+            theme: "bootstrap4",
+            language: 'es'
+        });
+
+        $('select[name="categories"]').on('change', function () {
+            var id = $(this).val();
+            
+            var options = '<option value="">----------</option>';
+            if (id === '') {
+                select_products.html(options);
+                return false;
+            }
+            $.ajax({
+                url: window.location.pathname,
+                type: 'POST',
+                data: {
+                    'action': 'search_product_id',
+                    'id': id
+                },
+                dataType: 'json',
+            }).done(function (data) {
+                console.log(data);
+                if (!data.hasOwnProperty('error')) {
+                    console.log(data);
+                     select_products.html('').select2({
+                         theme: "bootstrap4",
+                         language: 'es',
+                         data: data
+                     });
+                    $.each(data, function (key, value) {
+                        options += '<option value="' + value.id + '">' + value.name + '</option>';
+                    });
+                    return false;
+                }
+                message_error(data.error);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                //alert(textStatus + ': ' + errorThrown);
+            }).always(function (data) {
+                
+            });
+            
+        });
+
+        select_products.on('change', function () {
+            var value = select_products.select2('data')[0];
+            console.log(value);
+        });
+
+        
+        /* Este AutoComplete es con Select2 */
+        $('select[name="search"]').select2({
+            theme: "bootstrap4",
+            language: 'es',
+            allowClear: true,
+            ajax: {
+                delay: 250,
+                type: 'POST',
+                url: window.location.pathname,
+                data: function (params) {
+                    var queryParameters = {
+                        term: params.term,
+                        action: 'autocomplete'
+                    }
+                    return queryParameters;
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                },
+            },
+            placeholder: 'Ingrese Tipo de Prenda',
+            minimumInputLength: 1,
+        });
+
+
+    });
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////
+/* VISTA SaleCreateView - SEARCH PRODUCTS CON AJAX (vídeo 44 - 45)*/
+def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'search_product_id':
+                data = [{'id': '', 'text': '------------'}]
+                produccion = Production.objects.filter(cat_id=request.POST['id'])
+                for i in produccion:
+                    data.append({'id': i.id, 'name': i.name})
+
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+/* SEARCH PRODUCTS CON AJAX */
+var select_products = $('select[name="products"]');
+$(function () {
+
+    $('.select2').select2({
+        theme: "bootstrap4",
+        language: 'es'
+    });
+
+    $('select[name="categories"]').on('change', function () {
+        var id = $(this).val();
+        var select_products = $('select[name="productions"]');
+        var options = '<option value="">----------</option>';
+        if (id === '') {
+            select_products.html(options);
+            return false;
+        }
+        $.ajax({
+            url: window.location.pathname,
+            type: 'POST',
+            data: {
+                'action': 'search_product_id',
+                'id': id
+            },
+            dataType: 'json',
+        }).done(function (data) {
+            console.log(data);
+            if (!data.hasOwnProperty('error')) {
+                console.log(data);
+  
+                $.each(data, function (key, value) {
+                    options += '<option value="' + value.id + '">' + value.name + '</option>';
+                });
+                return false;
+            }
+            message_error(data.error);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            alert(textStatus + ': ' + errorThrown);
+        }).always(function (data) {
+            select_products.html(options);
+        });
+    });
+});
+
+///////////////////////////////////////////////////////////////////////
+
+
+
+///////////////////////////////////////////////////////////////////////
+/* AutoComplete con Ajax - Esto va despues del Select2* (vídeo 51*/
+/* En el Form debe ser un componete de tipo "form-contro"*/
+categories = ModelChoiceField(queryset=Category.objects.all(), 
+        widget=forms.Select(attrs={
+            'class': 'form-control select2',
+            'style': 'width: 100%',
+            'placeholder':'Ingrese Tipo de Prenda',
+}))
+
+search = CharField(widget=TextInput(attrs={
+    'class': 'form-control',
+    'placeholder': 'Ingrese una descripción'
+}))
+
+
+/* Script para el AutoComplete */
+$('input[name="search"]').autocomplete({
+    source: function (request, response) {
+        $.ajax({
+            url: window.location.pathname,
+            type: 'POST',
+            data: {
+                'action': 'autocomplete',
+                'term': request.term
+            },
+            dataType: 'json',
+        }).done(function (data) {
+            response(data);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //alert(textStatus + ': ' + errorThrown);
+        }).always(function (data) {
+
+        });
+    },
+    delay: 500,
+    minLength: 1,
+    select: function (event, ui) {
+        console.log(ui.item);
+    }
+});
+
+/* Vista para el AutoComplete*/
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'search_product_id':
+                data = [{'id': '', 'text': '----------'}]
+                produccion = Production.objects.filter(cat_id=request.POST['id'])
+                for i in produccion:
+                    data.append({'id': i.id, 'text': i.name,'data': i.cat.toJSON()})
+            elif action == 'autocomplete':
+                data = []
+                categorias = Category.objects.filter(name__icontains=request.POST['term'])[0:30]
+                for i in categorias:
+                    item = i.toJSON()
+                    item['value'] = i.name
+                    data.append(item)
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////
+/* SEARCH PRODUCTS */
+$('input[name="search"]').autocomplete({
+    source: function (request, response) {
+        $.ajax({
+            url: window.location.pathname,
+            type: 'POST',
+            data: {
+                'action': 'autocomplete',
+                'term': request.term
+            },
+            dataType: 'json',
+        }).done(function (data) {
+            response(data);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //alert(textStatus + ': ' + errorThrown);
+        }).always(function (data) {
+
+        });
+    },
+    delay: 500,
+    minLength: 1,
+    select: function (event, ui) {
+        alert("Este es el dato:" +ui.item.label);
+        event.preventDefault();
+        console.clear();
+        vents.items.products.push(ui.item);
+        //ui.item.cant = 1;
+        //ui.item.subtotal = 0.00;
+        console.log(vents.items);
+        //ents.add(ui.item);
+       //products = $('#search').val(),
+        //console.log(products),
+        $(this).val('');
+    }
+});
+});
+</script>
+
+
+
+
+
+
+

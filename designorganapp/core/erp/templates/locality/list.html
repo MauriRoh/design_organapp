@@ -1,0 +1,141 @@
+{% extends "body.html" %}
+<!---->
+{% load static %}
+<!-- APP Widgwt Tweaks -->
+{% load widget_tweaks %}
+
+<!---->
+{% block head %}
+<!----------------------------  DataTable ------------------------------------>
+<link rel="stylesheet" href="{% static 'lib/datatables/datatables-1.10.22/css/dataTables.bootstrap4.min.css' %}" />
+<link rel="stylesheet" href="{% static 'lib/datatables/datatables-1.10.22/plugins/css/responsive.bootstrap4.min.css' %}" />
+<script src="{% static 'lib/datatables/datatables-1.10.22/js/jquery.dataTables.js' %}"></script>
+<script src="{% static 'lib/datatables/datatables-1.10.22/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'lib/datatables/datatables-1.10.22/plugins/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'lib/datatables/datatables-1.10.22/plugins/js/responsive.bootstrap4.min.js' %}"></script>
+<!---------------------------- FIN DataTable ------------------------------------>
+
+<script src="{% static 'app/locality/js/functions.js' %}"></script>
+{% endblock head %}
+<!---->
+
+<!-- Bloque de Datos -->
+{% block content_data %}
+
+<!-- /.card-header -->
+<div class="card card-default">
+    <div class="card navbar-dark white-text" style="background-color:#0A0EF0;">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fas fa-industry"></i>
+                <font _mstmutation="1" _msthash="2599285" _msttexthash="94939"> {{title}} </font>
+            </h3>
+        </div>
+    </div>
+
+    <div class="card-body">
+
+        <!-- BUSCADOR / NUEVO REGISTRO -->
+        <form method="GET">{% csrf_token %}
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Buscar por:</span>
+                            <input class="form-control" type="text" name="localitykeyword" id="localitykeyword" value="{{request.GET.localitykeyword}}" placeholder="Department">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-lg-1">
+                        <button id="btnloadlistcategory" style="background-color:#0A0EF0;" class="btn white-text btn-rounded btn-sm" type="submit"><i class="fas fa-search ml-1"></i></button>
+                    </div>
+                    <div class="col-lg-1">
+                        <a href="{% url 'productos_app:locality-create' %}" style="background-color:#0A0EF0;" class="btn white-text btn-rounded btn-sm"> <i class="fas fa-plus ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <!-- FIN BUSCADOR / NUEVO REGISTRO -->
+
+        <!-- TABLE -->
+        <table id="dtBasicExample" class="table table-striped table-hover table-sm text-center" cellspacing="0" width="100%">
+            <thead style="background-color:#3D6AF2;" class="white-text">
+                <tr>
+                    <th class="th-sm">ID</th>
+                    <th class="th-sm">Acción</th>
+                    <th class="th-sm">Departamento / Partido</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i_list in listlocality %}
+                    <tr>
+                        <td> {{ i_list.id }} </td>
+                        <td>
+                            <a href="{% url 'productos_app:locality-update' i_list.id %}" style="background-color:#3D6AF2;" class="btn white-text btn-rounded sm-1" role="button" aria-pressed="true"><i class="far fa-edit sm-1"></i></a>
+                        <td> {{ i_list.name}} </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot style="background-color:#3D6AF2;" class="white-text">
+                <tr>
+                    <th class="th-sm">ID</th>
+                    <th class="th-sm">Acción</th>
+                    <th class="th-sm">Departamento / Partido</th>
+                </tr>
+            </tfoot>
+        </table>
+        <!-- FIN TABLE -->
+    </div>
+
+</div>
+
+<script>
+    $('#dtBasicExample').DataTable({
+        "scrollX": true,
+        "scrollX": 400,
+        "scrollY": 400,
+        paging: true,
+        responsive: true,
+        //autoWidth: false,
+        destroy: true,
+        deferRender: true,
+        language: {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla =(",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            },
+            "buttons": {
+                "copy": "Copiar",
+                "colvis": "Visibilidad"
+            }
+        },
+    });
+</script>
+
+
+{% endblock content_data %}
+<!-- fin JavaScript QUE LLAMA AL MODAL DEL HTML-->
